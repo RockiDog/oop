@@ -1,0 +1,54 @@
++Connecting Database
+    +Embedded SQL
+    +Dynamic SQL
+        +Embeddeding dynamic SQL
+            -needs preprocessor
+        +ODBC
+            -Open Database Connectivity
+            -support C, C++, VB
+            -defines an API
+            -database system provides a library
+        +ADO and ADO.NET
+            -designed for VB, C#
+        +JDBC*
+            -for Java
+
++Through MySQL API
+    -install MySQL API
+    -include mysql++/mysql++.h
+    -use the API
+
++Tips of using libmysql++3
+    +Buried MySQL C API Headers
+        -MySQL++ relies on MySQL C API Headers
+        -since the MySQL C API Headers are in /usr/include/mysql on my computer, thay are buried to MySQL++
+        -define MYSQLPP_MYSQL_HEADERS_BURIED macro to make sure the MySQL++ include the right C API headers
+        -is it because of my 64-bit machine?
+    +Usage of MySQL++ briefly
+        -Open the connecton
+        -Form and execute the query
+        -If successful, iterate through the result set
+        -Else, deal with errors
+        Each of these steps corresponds to a MySQL++ class or class hierarchy
+    +Exceptions
+        -by passing false to Connection's constructor
+        -All of MySQL++'s custom exceptions derive from the base class Exception
+        +MySQL++ throws some exceptions
+            -<BadIndex>: always checks array indices,  exception
+            -<String>: always throws <BadConversion> when improper type conversion happens
+            -<BadParamCount>: If template queries are used without enough parameters when instantiating the template
+            -<TypeLookupFailed>: when C++ data type used in a query that MySQL++ doesn't know
+    +Quoting and Escaping
+        -<quote_only>
+        -<quote>: quote and escape
+    +Query type to use
+        -<Query::execute()>: for queries that do not return data, and it returns a <SimpleResult> object within some informantion
+        -<Query::exec()>: more efficient than the previous one, simply return bool
+        -<Query::store()>: returns a <StoreQueryResult> object which derives from vector
+        -<Query::storein()>: allow you to store the result in any STL container
+        -<Query::use()>: returns a <UseQueryResult> object, sends the results back one row at a time(use <UseQueryResult::fetch_row> to iterate), better not use
+    +Conditionnal result row handling
+        -SQL's WHERE is powerful, but not as powerful as C++
+        -<Query::store_if()>: gives a container full of results meeting a criterion that can not be expressed in SQL
+    +Executing code for each row in a result set
+        -<Query::for_each()>
