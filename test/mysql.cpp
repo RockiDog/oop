@@ -1,9 +1,10 @@
 #define MYSQLPP_MYSQL_HEADERS_BURIED
-#include <mysql++/mysql++.h>
-#include <mysql++/cmdline.h>
+
 #include <iostream>
 #include <string>
 #include <vector>
+#include <mysql++/mysql++.h>
+
 using namespace std;
 
 namespace
@@ -34,7 +35,7 @@ int main(int args, char *argv[])
     //Establish the connection to the database server
     mysqlpp::Connection conn(false);
     conn.connect(database.c_str(), server.c_str(), user.c_str(), password.c_str());
-    if(false==conn.connected())
+    if(false == conn.connected())
     {
         cout << "Can not establish connection, please check your input!" << endl;
         return -1;
@@ -44,14 +45,11 @@ int main(int args, char *argv[])
     
     //Test the query
     //Choose database
-    mysqlpp::Query query = conn.query("insert into student values('3120102084', 'Wang Ru', 20, 3.91)");
-    if(false == query.exec())
+    mysqlpp::Query query = conn.query("select* from student where id='3120102084'");
+    mysqlpp::StoreQueryResult res = query.store();
+    for(mysqlpp::StoreQueryResult::size_type i = 0; i != res.num_rows(); ++i)
     {
-        cout << "Can not insert" << endl;
-        return -1;
+        cout << res[i]["id"] << res[i]["name"] << res[i]["age"] << res[i]["gpa"] << endl;
     }
-    else
-        cout << "Insert successfully" << endl;
-    
     return 0;
 }
