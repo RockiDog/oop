@@ -3,8 +3,8 @@
 
 using namespace OOP_MYSQL;
 
-Connection::Connection()
-    : conn(true), connected(false)
+Connection::Connection(bool except)
+    : conn(except), connected(false)
 {
 }
 
@@ -13,9 +13,15 @@ Connection::Connection(const Connection& other)
 {
 }
 
-bool Connection::connect(const char* user, const char* password, const char* server, const char* database, unsigned int port)
+bool Connection::connect(const char* user,
+                            const char* password,
+                            const char* server, 
+                            const char* database, 
+                            unsigned int port)
 {
-    std::cout << "Connecting to the database" << server << "..." << std::endl;
+    std::cout << "Connecting to the database " << database
+                << " on " << server << "..." << std::endl;
+    
     conn.connect("test", server, user, password, port);
     if(false == conn.connected())
         connected = false;

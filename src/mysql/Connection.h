@@ -14,11 +14,16 @@ namespace OOP_MYSQL
     class Connection
     {
     public:
-        Connection();
+        Connection(bool except = false);
         Connection(const Connection& other);
     
     public:
-        bool connect(const char* user, const char* password, const char* server = "localhost", const char* database = "test", unsigned int port = 0);
+        bool connect(const char* user,
+                const char* password,
+                const char* server = "localhost",
+                const char* database = "test",
+                unsigned int port = 0);
+        
         void disconnect();
         
         bool isConnected()
