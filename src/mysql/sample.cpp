@@ -7,10 +7,13 @@
 
 #include "MySQL.h"
 #include <iostream>
+#include <iomanip>
+#include <stdexcept>
 #include <string>
 using namespace std;
 using namespace OOP_MYSQL;
 
+//TODO add exception
 int main()
 {
     string user;
@@ -22,112 +25,96 @@ int main()
     
     //Establish the connection
     //Default connect to the database "test" on "localhost"
-    Connection conn;
-    conn.connect(user.c_str(), password.c_str());
-    if(false == conn.isConnected())
+    try
     {
-        cout << "Can not connect to mysql!" << endl;
-        return -1;
-    }
-    else
-    {
+        Connection conn(true);
+        conn.connect(user.c_str(), password.c_str());
         cout << "Connected!" << endl;
-    }
-    
-    //Test query
-    string queryStr;
-    
-    //Insert
-    queryStr = "insert into student values('3120102084', 'Wang Ru', 20, 3.91)";//Give the query
-    Insert ins1(conn, queryStr.c_str());//Instantiating an insert query
-    ins1.exec();//Execute the Insert, simply return a bool
-    if (false == ins1.isExecuted())
-    {
-        cout << "Can not insert!" << endl;
-        return -1;
-    }
-    else
-    {
-        cout << "Inserted!" << endl;
-    }
-    
-    queryStr = "insert into student values('3120123456', 'Jack', 20, 4.03)";//Give the query
-    Insert ins2(conn, queryStr.c_str());//Instantiating an insert query
-    ins2.exec();//Execute the Insert, simply return a bool
-    if (false == ins2.isExecuted())
-    {
-        cout << "Can not insert!" << endl;
-        return -1;
-    }
-    else
-    {
-        cout << "Inserted!" << endl;
-    }
-    
-    queryStr = "insert into student values('3120234567','Rose',20,3.81)";//Give the query
-    Insert ins3(conn, queryStr.c_str());//Instantiating an insert query
-    ins3.exec();//Execute the Insert, simply return a bool
-    if (false == ins3.isExecuted())
-    {
-        cout << "Can not insert!" << endl;
-        return -1;
-    }
-    else
-    {
-        cout << "Inserted!" << endl;
-    }
-    
-    //Delete
-    /*
-    queryStr = "delete from student where id = '3102102084'";//Give the query
-    Delete del(conn, queryStr.c_str());//Instantiating a delete query
-    del.exec();//Execute the Delete, simply return a bool
-    if (false == del.isExecuted())
-    {
-        cout << "Can not delete!" << endl;
-        return -1;
-    }
-    else
-    {
-        cout << "Deleted!" << endl;
-    }
-    */
-    
-    //Update
-    /*
-    queryStr = "update student set gpa=3.92 where id='3120123456'";//Give the query
-    Update upd(conn, queryStr.c_str());//Instantiating an update query
-    upd.exec();//Execute the Delete, simply return a bool
-    if (false == upd.exec())
-    {
-        cout << "Can not update!" << endl;
-        return -1;
-    }
-    else
-    {
-        cout << "Updated!" << endl;
-    }
-    */
-    
-    //Select
-    queryStr = "select* from student where gpa>3.50";
-    Select sel(conn, queryStr.c_str());//
-    sel.exec();//Execute the Delete, simply return a bool
-    if (false == sel.isExecuted())
-    {
-        cout << "Can not select!" << endl;
-        return -1;
-    }
-    else
-    {
-        while (Tuple tuple = sel.fetchTuple())
+        
+        //Test query
+        string queryStr;
+     
+        //Insert
+        try
         {
-            cout << "[id]\t" << "[name]\t" << "[age]\t" << "[gpa]\t\n"
-                << tuple["id"] << "\t"
-                << tuple["name"] << "\t"
-                << tuple["age"] << "\t"
-                << tuple["gpa"] << "\t" << endl;
+            queryStr = "insert into student values('3120102084', 'Wang Ru', 20, 3.91)";//Give the query
+            Insert ins1(conn, queryStr.c_str());//Instantiating an insert query
+            ins1.exec();//Execute the Insert, simply return a bool
+            cout << "Inserted!" << endl;
+            
+            queryStr = "insert into student values('3120123456', 'Jack', 20, 4.03)";//Give the query
+            Insert ins2(conn, queryStr.c_str());//Instantiating an insert query
+            ins2.exec();//Execute the Insert, simply return a bool
+            cout << "Inserted!" << endl;
+            
+            queryStr = "insert into student values('3120234567','Rose',20,3.81)";//Give the query
+            Insert ins3(conn, queryStr.c_str());//Instantiating an insert query
+            ins3.exec();//Execute the Insert, simply return a bool
+            cout << "Inserted!" << endl;
         }
+        catch (mysqlpp::BadQuery err)
+        {
+            cout << err.errnum() << ": " << err.what() << endl;
+        }
+        
+        //Delete
+        try
+        {
+            queryStr = "delete from student where id='3120102084'";//Give the query
+            Delete del(conn, queryStr.c_str());//Instantiating a delete query
+            del.exec();//Execute the Delete, simply return a bool
+            cout << "Deleted!" << endl;
+        }
+        catch (mysqlpp::BadQuery err)
+        {
+            cout << err.errnum() << ": " << err.what() << endl;
+        }
+        
+        //Update
+        try
+        {
+            queryStr = "update student set gpa=3.92 where id='3120102084'";//Give the query
+            Update upd(conn, queryStr.c_str());//Instantiating an update query
+            upd.exec();//Execute the Update, simply return a bool
+            cout << "Updated!" << endl;
+        }
+        catch (mysqlpp::BadQuery err)
+        {
+            cout << err.errnum() << ": " << err.what() << endl;
+        }
+        
+        //Select
+        try
+        {
+            queryStr = "select* from student";
+            Select sel(conn, queryStr.c_str());//
+            sel.exec();//Execute the Delete, simply return a bool
+            
+            //output the result
+            cout << left << setw(15) << "[id]";
+            cout << left << setw(15) << "[name]";
+            cout << left << setw(15) << "[age]";
+            cout << left << setw(15) << "[gpa]" << endl;
+            while (Tuple tuple = sel.fetchTuple())
+            {
+                cout << setw(15) << tuple["id"];
+                cout << setw(15) << tuple["name"];
+                cout << setw(15) << tuple["age"];
+                cout << setw(15) << tuple["gpa"] << endl;
+            }
+        }
+        catch (mysqlpp::BadQuery err)
+        {
+            cout << err.errnum() << ": " << err.what() << endl;
+        }
+    }
+    catch (mysqlpp::BadQuery err)
+    {
+        cout << err.errnum() << ": " << err.what() << endl;
+    }
+    catch (mysqlpp::ConnectionFailed err)
+    {
+        cout << err.errnum() << ": " << err.what() << endl;
     }
     
     return 0;
