@@ -1,19 +1,35 @@
-//this file shows a simple sample for the customer mysql C++ API,
-//give the brief usage,
-//test the features of connecting to a database,
-//inserting, deleting, updating and selecting
-//you only need to include the head file <project>/src/mysql/MySQL.h
-//and use the namespace OOP_MYSQL
+//**************************************************************
+//
+//  Shows a simple sample that
+//  gives the brief usage of the mysql C++ API.
+//
+//  Tests the features of connecting,
+//  inserting, deleting, updating and selecting.
+//
+//  "libmysql++3" needed,
+//  download from http://tangentsoft.net/mysql++/
+//
+//  Include "<project_name>/src/mysql/MySQL.h".
+//  Use the namespace "OOP_MYSQL".
+//
+//  If your IDE do not compile automatically:
+//      +Build from the source
+//          -Execute "make" under "<project_name>/src/mysql/"
+//          -Or compile and link by yourself,
+//           see makefile for more information
+//      +Run "./sample"
+//
+//**************************************************************
 
 #include "MySQL.h"
 #include <iostream>
 #include <iomanip>
 #include <stdexcept>
 #include <string>
+
 using namespace std;
 using namespace OOP_MYSQL;
 
-//TODO add exception
 int main()
 {
     string user;
@@ -23,10 +39,10 @@ int main()
     cout << "Please input your: [user name] [password]: ";
     cin >> user >> password;
     
-    //Establish the connection
-    //Default connect to the database "test" on "localhost"
     try
     {
+        //Establish the connection
+        //Default connect to the database "test" on "localhost"
         Connection conn(true);
         conn.connect(user.c_str(), password.c_str());
         cout << "Connected!" << endl;
@@ -52,7 +68,7 @@ int main()
             ins3.exec();//Execute the Insert, simply return a bool
             cout << "Inserted!" << endl;
         }
-        catch (mysqlpp::BadQuery err)
+        catch (QueryErr err)
         {
             cout << err.errnum() << ": " << err.what() << endl;
         }
@@ -65,7 +81,7 @@ int main()
             del.exec();//Execute the Delete, simply return a bool
             cout << "Deleted!" << endl;
         }
-        catch (mysqlpp::BadQuery err)
+        catch (QueryErr err)
         {
             cout << err.errnum() << ": " << err.what() << endl;
         }
@@ -78,7 +94,7 @@ int main()
             upd.exec();//Execute the Update, simply return a bool
             cout << "Updated!" << endl;
         }
-        catch (mysqlpp::BadQuery err)
+        catch (QueryErr err)
         {
             cout << err.errnum() << ": " << err.what() << endl;
         }
@@ -103,16 +119,16 @@ int main()
                 cout << setw(15) << tuple["gpa"] << endl;
             }
         }
-        catch (mysqlpp::BadQuery err)
+        catch (QueryErr err)
         {
             cout << err.errnum() << ": " << err.what() << endl;
         }
     }
-    catch (mysqlpp::BadQuery err)
+    catch (QueryErr err)
     {
         cout << err.errnum() << ": " << err.what() << endl;
     }
-    catch (mysqlpp::ConnectionFailed err)
+    catch (ConnectionErr err)
     {
         cout << err.errnum() << ": " << err.what() << endl;
     }

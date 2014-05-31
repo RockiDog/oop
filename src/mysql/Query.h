@@ -12,6 +12,8 @@ namespace OOP_MYSQL
 {
     typedef mysqlpp::Row Tuple;
     typedef mysqlpp::UseQueryResult Result;
+    typedef mysqlpp::BadQuery QueryErr;
+    typedef mysqlpp::ConnectionFailed ConnectionErr;
     
     class Query
     {
