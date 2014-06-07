@@ -20,7 +20,7 @@
 *.out
 *.app
 
-# My Ignore
+# My Ignorance
 *.swp
 *.vim
 src/Qtest/*
