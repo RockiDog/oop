@@ -24,7 +24,6 @@
 #include "MySQL.h"
 #include <iostream>
 #include <iomanip>
-#include <stdexcept>
 #include <string>
 
 using namespace std;
@@ -103,7 +102,7 @@ int main()
         try
         {
             queryStr = "select* from student";
-            Select sel(conn, queryStr.c_str());//
+            Select sel(conn, queryStr.c_str());//Instantiating an select query
             sel.exec();//Execute the Delete, simply return a bool
             
             //output the result

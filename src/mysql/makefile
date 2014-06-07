@@ -1,18 +1,18 @@
 sample:sample.cpp Connection.o Query.o Insert.o Delete.o Update.o Select.o
 	g++ -o sample sample.cpp Connection.o Query.o Insert.o Delete.o Update.o Select.o \
-	-lmysqlpp -lmysqlclient
+	    -lmysqlclient -lmysqlpp 
 Connection.o:Connection.cpp Connection.h
-	g++ -c Connection.cpp
+	g++ -c -fPIC Connection.cpp
 Query.o:Query.cpp Query.h
-	g++ -c Query.cpp
+	g++ -c -fPIC Query.cpp
 Insert.o:Insert.cpp Insert.h
-	g++ -c Insert.cpp
+	g++ -c -fPIC Insert.cpp
 Delete.o:Delete.cpp Delete.h
-	g++ -c Delete.cpp
+	g++ -c -fPIC Delete.cpp
 Update.o:Update.cpp Update.h
-	g++ -c Update.cpp
+	g++ -c -fPIC Update.cpp
 Select.o:Select.cpp Select.h
-	g++ -c Select.cpp
+	g++ -c -fPIC Select.cpp
 clean:
 	rm Connection.o Query.o Insert.o Delete.o Update.o Select.o
 truncate:
