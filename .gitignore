@@ -22,6 +22,6 @@
 
 # My Ignore
 *.swp
-./src/Qtest/*
-./src/build-Qtest-Desktop-Debug/*
-./src/build-Qtest-Desktop-Release/*
+src/Qtest/*
+src/build-Qtest-Desktop-Debug/*
+src/build-Qtest-Desktop-Release/*
