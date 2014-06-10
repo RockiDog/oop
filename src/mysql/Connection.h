@@ -5,6 +5,8 @@
 #define MYSQLPP_MYSQL_HEADERS_BURIED
 #endif
 
+#include <string>
+
 #include <mysql++/mysql++.h>
 
 namespace OOP_MYSQL
@@ -22,6 +24,12 @@ namespace OOP_MYSQL
                 const char* password,
                 const char* server = "localhost",
                 const char* database = "test",
+                unsigned int port = 0);
+        
+        bool connect(const std::string user,
+                const std::string password,
+                const std::string server = "localhost",
+                const std::string database = "test",
                 unsigned int port = 0);
         
         void disconnect();
