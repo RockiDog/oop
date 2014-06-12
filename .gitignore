@@ -23,6 +23,6 @@
 # My Ignorance
 *.swp
 *.vim
-src/Qtest/*
-src/build-Qtest-Desktop-Debug/*
-src/build-Qtest-Desktop-Release/*
+src/Gui/*
+src/build-Gui-Desktop-Debug/*
+src/build-Gui-Desktop-Release/*
