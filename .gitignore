@@ -26,3 +26,6 @@
 src/Gui/*
 src/build-Gui-Desktop-Debug/*
 src/build-Gui-Desktop-Release/*
+test/*
+resource/*
+src/mysql/sample
