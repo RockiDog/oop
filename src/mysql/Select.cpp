@@ -2,11 +2,13 @@
 
 using namespace OOP_MYSQL;
 
-Select::Select(Connection& conn, const char* queryStr): Query(conn, queryStr)
+Select::Select(Connection& conn, const char* queryStr)
+    : Query(conn, queryStr)
 {
 }
 
-Select::Select(const Select& other): Query(other)
+Select::Select(const Select& other)
+    : Query(other)
 {
 }
 

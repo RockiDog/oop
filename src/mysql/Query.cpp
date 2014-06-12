@@ -3,16 +3,66 @@
 using namespace OOP_MYSQL;
 
 Query::Query(const mysqlpp::Query& query)
-    : query(query), executed(false)
+    : executed(false), query(query), needQuote(false), needSub(false)
 {
 }
 
 Query::Query(Connection& conn, const char* queryStr)
-    : query(conn.conn.query(queryStr)), executed(false)
+    : executed(false), query(conn.conn.query(queryStr)), needQuote(false), needSub(false)
 {
 }
 
 Query::Query(const Query& other)
-    : query(other.getQuery()), executed(false)
+    : executed(false), query(other.getQuery()), needQuote(false), needSub(false)
 {
+}
+
+Query& Query::operator<<(const std::string& str)
+{
+    query << str;
+    if(true == needSub)
+    {
+        query << "\%";
+        needSub = false;
+    }
+    
+    if (true == needQuote)
+    {
+        query << "\'";
+        needQuote = false;
+    }
+    return *this;
+}
+
+Query& Query::operator<<(const char* str)
+{
+    query << str;
+    if(true == needSub)
+    {
+        query << "\%";
+        needSub = false;
+    }
+    
+    if (true == needQuote)
+    {
+        query << "\'";
+        needQuote = false;
+    }
+    return *this;
+}
+
+Query& Query::operator<<(const Symbol& symbol)
+{
+    if (QUOTE == symbol)
+    {
+        query << "\'";
+        needQuote = true;
+    }
+    
+    if (SUBSTRING == symbol)
+    {
+        query << "\%";
+        needSub = true;
+    }
+    return *this;
 }
