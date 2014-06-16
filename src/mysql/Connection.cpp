@@ -40,7 +40,7 @@ bool Connection::connect(const string user,
 {
     std::cout << "Connecting to the database " << database
                 << " on " << server << "..." << std::endl;
-
+    
     conn.connect("test", server.c_str(), user.c_str(), password.c_str(), port);
     if(false == conn.connected())
         connected = false;
