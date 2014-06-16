@@ -23,9 +23,11 @@
 # My Ignorance
 *.swp
 *.vim
+*.sql
 src/Gui/*
 src/build-Gui-Desktop-Debug/*
 src/build-Gui-Desktop-Release/*
+src/Student/*
+src/mysql/sample
 test/*
 resource/*
-src/mysql/sample

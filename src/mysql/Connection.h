@@ -23,13 +23,13 @@ namespace OOP_MYSQL
         bool connect(const char* user,
                 const char* password,
                 const char* server = "localhost",
-                const char* database = "test",
+                const char* database = "oop",
                 unsigned int port = 0);
         
         bool connect(const std::string user,
                 const std::string password,
                 const std::string server = "localhost",
-                const std::string database = "test",
+                const std::string database = "oop",
                 unsigned int port = 0);
         
         void disconnect();
