@@ -24,7 +24,10 @@
 *.swp
 *.vim
 *.sql
-./*
+*.txt
+*.sh
+*.ogv
+Gui
 src/Gui/*
 src/build-Gui-Desktop-Debug/*
 src/build-Gui-Desktop-Release/*
