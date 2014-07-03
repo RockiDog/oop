@@ -27,6 +27,7 @@
 *.txt
 *.sh
 *.ogv
+*.zip
 Gui
 src/Gui/*
 src/build-Gui-Desktop-Debug/*
